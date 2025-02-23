@@ -146,7 +146,7 @@ export const delete_user = async (req: Request, res: Response) => {
 
   try {
     const user = await s_delete_user(req, res);
-    if (user.affected === 0) {
+    if (!user) {
       res.status(404).json({
         error: true,
         message: "User not found",

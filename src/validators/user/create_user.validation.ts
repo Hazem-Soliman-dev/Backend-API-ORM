@@ -20,5 +20,13 @@ export const create_user_validation = () => {
       .withMessage("Password is required")
       .isLength({ min: 8, max: 255 })
       .withMessage("Password must be between 8 and 255 characters"),
+    check("avatar").custom((value, { req }) => {
+      if (!req.file) return true; // Allow no file
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!allowedTypes.includes(req.file.mimetype)) {
+        throw new Error("Invalid file type");
+      }
+      return true;
+    }),
   ];
 };
